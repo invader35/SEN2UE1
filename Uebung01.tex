@@ -1,0 +1,187 @@
+\documentclass[10pt,a4paper]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\author{Schett Matthias}
+\title{SEN-Übung 2.1}
+\begin{document}
+\definecolor{gray}{rgb}{0.9,0.9,0.9}
+\lstset{language=[Visual]Basic, morekeywords={param, local}}
+\maketitle
+
+\newpage
+\section{Aufgabe 1}
+
+\subsection{L\"{o}sungsidee}
+
+Es soll ein binärer Suchbaum implementiert werden.
+
+Dieser soll folgende Funktionen aufweisen:
+
+\begin{enumerate}
+	\item bool Contains (TTreeNode const * const pRoot, int const Data);\label{contains}
+	\item void Delete (TTreeNode * \& pRoot, int const Data);\label{delete}
+	\item void Flush (TTreeNode * \& pRoot);\label{flush}
+	\item int Height (TTreeNode const * const pRoot);\label{height}
+	\item void InsertSorted (TTreeNode * \& pRoot, int const Data); \label{insertsorted}
+	\item void PrintInOrder (TTreeNode const * const pRoot);\label{inorder}
+	\item void PrintPostOrder (TTreeNode const * const pRoot);\label{posrtorder}
+	\item void PrintPreOrder (TTreeNode const * const pRoot);\label{preorder}
+	\item void PrintTree (TTreeNode const * const pRoot, size\_t const Indent);\label{printtree}
+\end{enumerate}
+
+ad \ref{contains}:
+Die Contains Methode sucht rekursiv ob in dem gegebenen Tree der gesuchte Wert enthalten ist.
+
+ad \ref{delete}:
+Die Delete Methode löscht einen Knoten mit dem gegebenen Wert aus dem Baum und hängt die anderen Knoten wieder richtig ein.
+
+ad \ref{flush}:
+Flus löscht den gesamten Baum und gibt sämtlichen reservierten Speicher wieder frei.
+
+ad \ref{height}:
+Gibt die Höhe des Baumes aus.
+
+ad \ref{insertsorted}:
+Fügt dem Baum einen neuen Knoten hinzu, dieser wird auch gleich an der richtigen Stelle einsortiert.
+
+ad \ref{inorder}:
+Inorder gibt den Baum in der richtigen Reihenfolge, also vom kleinsten zum Größten Wert.
+
+ad \ref{posrtorder}:
+Gibt die Wurzel nach den Teilbäumen aus.
+
+ad \ref{preorder}:
+Gibt die Wurzel vor den Teilbäumen  aus.
+
+ad \ref{printtree}
+Gibt den Baum von oben nach unten aus, genauso wie er aufgezeichnet werden würde.
+
+
+Weiters werden noch folgende Hilfsmethoden verwendet:
+
+\begin{enumerate}
+	\item TTreeNode * MakeNode (int const Data);\label{makenode}
+	\item void PrintNodeData(TTreeNode const * const pNode);\label{prindnodedata}
+\end{enumerate}
+
+ad \ref{makenode}:
+Mit dieser Methode wird ein neuer Knoten am Heap angelegt.
+
+ad \ref{prindnodedata}
+Diese Methode gibt das Data Element der TTreeNode Struktur auf der std::out aus.
+
+\newpage
+\subsection{Programmcode in C++}
+
+\subsubsection{Modul Header}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{BinarySearchTree/BinaryTree.h}
+
+
+\subsubsection{Modul Cpp}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{BinarySearchTree/BinaryTree.cpp}
+
+\newpage
+\subsubsection{Testreiber}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{BinarySearchTree/main.cpp}
+
+\newpage
+\subsection{Testf\"{a}lle}
+
+Ausgabe des Testtreibers:
+
+\begin{lstlisting}
+
+Tree contains a 3 yes
+Tree contains a 10 no
+The height of the tree is 2
+Pre Order
+(5) (3) (2) (4) (7) (6) (8)
+
+In Order
+(2) (3) (4) (5) (6) (7) (8)
+
+Post Order
+(2) (4) (3) (6) (8) (7) (5)
+
+Print Tree
+         (8)
+      (7)
+         (6)
+   (5)
+         (4)
+      (3)
+         (2)
+
+
+Delete and print Tree
+(2) (4) (5) (6) (7) (8)
+
+Flush and print Tree
+
+
+\end{lstlisting}
+
+\section{Aufgabe 2}
+
+\subsection{L\"{o}sungsidee}
+
+Es soll ein Parser für Arithmetische Ausdrücke gebaut werden.
+Dazu wird mittels der EBNF Notation eine Grammatik definiert.
+Als Input wird mithilfe der vorhanden Scanner Klasse eine Datei gelesen und aus dieser dann der Arithmetische Ausdruck geparst
+und das Ergebnis auf std::out angezeigt. Fehlermeldung werden ebenfalls über std::out angegben.
+
+\newpage
+\subsection{Programmcode in C++}
+
+\subsubsection{Modul Header}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{ArithExpr/ArithExprModule.h}
+
+
+\subsubsection{Modul Cpp}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{ArithExpr/ArithExprModule.cpp}
+
+\newpage
+\subsubsection{Testreiber}
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{ArithExpr/ArithExpr.cpp}
+
+\newpage
+\subsection{Testf\"{a}lle}
+
+Input:
+\\
+8 * 2 + 4 * 2\\
+(10 * 10) - 1\\
+5 * 5 + (*1)\\
+2 * 3 + 4 / 0
+\\\\
+Output:
+\\
+24\\
+99\\
+Es wurde ein ungueltiges Zeichen in der Eingabe erkannt. Ergebnis wird trotz Fehlers ausgegeben: Es wurde ein weiterer Ausdruck oder eine Zahl erwartet! 25\\
+Es wurde ein ungueltiges Zeichen in der Eingabe erkannt. Ergebnis wird trotz Fehlers ausgegeben: Es wurde ein weiterer Ausdruck oder eine Zahl erwartet! 0\\
+Es wurde ein ungueltiges Zeichen in der Eingabe erkannt. Ergebnis wird trotz Fehlers ausgegeben: Division durch 0 ist nicht erlaubt 10
+
+
+
+\end{document}
